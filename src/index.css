@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+:root {
+  --bg-color: #1a0b2e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #2a0845, #6441a5, #ff6a88, #ff9966);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.fullscreen-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.fullscreen-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.4));
+}
+
+/* Floating Bubbles Background */
+.bg-bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -150px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  animation: fly 10s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(5px);
+}
+
+.bubble:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 8s; animation-delay: 0s; }
+.bubble:nth-child(2) { left: 25%; width: 50px; height: 50px; animation-duration: 12s; animation-delay: 2s; background: rgba(255, 255, 255, 0.05); }
+.bubble:nth-child(3) { left: 45%; width: 120px; height: 120px; animation-duration: 15s; animation-delay: 1s; }
+.bubble:nth-child(4) { left: 65%; width: 40px; height: 40px; animation-duration: 9s; animation-delay: 3s; }
+.bubble:nth-child(5) { left: 85%; width: 90px; height: 90px; animation-duration: 11s; animation-delay: 5s; }
+.bubble:nth-child(6) { left: 15%; width: 60px; height: 60px; animation-duration: 14s; animation-delay: 6s; }
+.bubble:nth-child(7) { left: 75%; width: 100px; height: 100px; animation-duration: 10s; animation-delay: 4s; }
+.bubble:nth-child(8) { left: 35%; width: 70px; height: 70px; animation-duration: 13s; animation-delay: 7s; background: rgba(255, 255, 255, 0.08); }
+
+@keyframes fly {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; }
+}
+
+/* Upload UI */
+.ui-layer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.upload-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.upload-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.upload-button:active {
+  transform: translateY(0);
+}
+
+.hidden-input {
+  display: none;
+}
+
+.playing-status {
+  background: rgba(0, 0, 0, 0.5);
+  color: #a7f3d0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(5px);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
