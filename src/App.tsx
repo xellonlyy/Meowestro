@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import { useRive } from '@rive-app/react-canvas';
 import * as Tone from 'tone';
 import { Midi } from '@tonejs/midi';
 import { Upload, Music } from 'lucide-react';
@@ -40,7 +40,7 @@ function App() {
   // We define a dummy stopMidiRef here, and update its current later
   const stopMidiRef = useRef<() => void>(() => {});
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { rive, RiveComponent } = useRive({
     src: '/18845-37092-play-piano-with-my-cat.riv',
@@ -107,11 +107,13 @@ function App() {
     await Tone.start();
     
     if (!synthRef.current) {
-      synthRef.current = new Tone.PolySynth(Tone.Synth, {
-        maxPolyphony: 88,
+      synthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
+      synthRef.current.maxPolyphony = 88;
+      
+      synthRef.current.set({
         oscillator: { type: 'sine' },
         envelope: { attack: 0.05, decay: 0.2, sustain: 0.2, release: 1.5 }
-      }).toDestination();
+      });
     }
 
     if (timerRef.current) {
@@ -205,7 +207,7 @@ function App() {
         )}
 
         {loadedMidi && !isPlaying && !isWaiting && (
-          <button className="upload-button" onClick={playMidi} style={{backgroundColor: 'rgba(52, 211, 153, 0.2)', borderColor: 'rgba(52, 211, 153, 0.5)'}}>
+          <button className="upload-button" onClick={() => playMidi(false)} style={{backgroundColor: 'rgba(52, 211, 153, 0.2)', borderColor: 'rgba(52, 211, 153, 0.5)'}}>
             <Music size={20} />
             <span>Play Loaded MIDI</span>
           </button>
